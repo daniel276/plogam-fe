@@ -1,0 +1,32 @@
+.add-product{
+  margin-top: 32px;
+
+  .text-header{
+    text-align: center;
+  }
+
+  .add-form{
+    .right{
+      align-self: flex-end;
+
+      button{
+        width: 100%;
+      }
+
+      .add-title{
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .add-button{
+      margin-top: 16px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  p{
+    margin: 0;
+  }
+}

@@ -1,3 +1,35 @@
-li{
-  list-style-type: none;
+.container{
+  margin: 12px;
+  height: 100%;
+
+  .form-group .row{
+    .form-control{
+      input{
+        text-align: center;
+        height: calc(3.5em + -0.25rem + 2px);
+      }
+    }
+  }
+
+  .product-content{
+    margin-top: 16px;
+
+    .left-box{
+      .add-button{
+        width: 100%;
+        height: 50px;
+      }
+
+      .quick-add{
+        margin-top: 8px;
+        border: 1px solid #ddd;
+      }
+    }
+
+    .right-box{
+      & > div {
+        margin-bottom: 16px;
+      }
+    }
+  }
 }
