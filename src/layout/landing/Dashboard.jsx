@@ -23,9 +23,6 @@ class Dashboard extends PureComponent{
             <div className="col-sm-4">
               <div className="left-box">
                   <Button className="add-button" onClick={this.add}>Tambah Produk</Button>
-                <div className="quick-add">
-                  <CreateUpdateProduct/>
-                </div>
               </div>
             </div>
             <div className="col-sm-8">

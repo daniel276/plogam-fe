@@ -3,6 +3,16 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 //PRODUCT
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCT = "GET_PRODUCT";
+
+//CATEGORY
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const GET_CATEGORY = "GET_CATEGORY";
+
+//SUPPLIER
+export const GET_SUPPLIERS = "GET_SUPPLIERS";
+export const GET_SUPPLIER = "GET_SUPPLIER";
 
 //ERRORS
 export const GET_ERRORS = "GET_ERRORS";

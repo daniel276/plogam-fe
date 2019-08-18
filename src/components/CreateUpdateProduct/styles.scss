@@ -6,6 +6,19 @@
   }
 
   .add-form{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    form .form-row {
+      &.inner-box{
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+    }
+
     .right{
       align-self: flex-end;
 

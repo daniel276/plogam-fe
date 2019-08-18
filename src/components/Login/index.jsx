@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { login } from "../../actions/securityActions";
-
 import "./styles.scss";
 
 class Login extends PureComponent {
@@ -25,7 +24,6 @@ class Login extends PureComponent {
     };
 
     this.props.login(loginRequest);
-
   };
 
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
@@ -70,6 +68,7 @@ class Login extends PureComponent {
 
 const mapStateToProps = state => ({
   security: state.security,
+  products: state.products,
   errors: state.errors
 });
 
