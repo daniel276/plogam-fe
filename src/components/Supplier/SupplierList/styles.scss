@@ -1,0 +1,26 @@
+.supplier-list{
+  &:not(:last-child){
+    margin-top: 16px;
+  }
+
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+
+  .supplier-card{
+    display: flex;
+    color: #58627a;
+
+    .right-side{
+      margin-left: auto;
+
+      .btn{
+        padding: 0.075rem 0.75rem;
+      }
+    }
+
+    p{
+       margin: 0;
+    }
+  }
+}

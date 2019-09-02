@@ -6,14 +6,20 @@ import Landing from "./layout/landing";
 import Dashboard from "./layout/landing/Dashboard";
 import store from "./store";
 import Header from "./layout/Header";
-import CreateUpdateProduct from "./components/CreateUpdateProduct";
+import CreateUpdateProduct from "./components/Product/CreateUpdateProduct";
+import CreateUpdateSupplier from "./components/Supplier/CreateUpdateSupplier";
+import ProductDetail from "./layout/landing/Product/ProductDetail";
+import SupplierDetail from "./layout/landing/Supplier/SupplierDetail";
 import './App.css';
+import NotFoundPage from "./layout/landing/NotFoundPage";
 //styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import setJWTToken from "./securityUtils/setJWTToken";
 import {SET_CURRENT_USER} from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecureRoute";
+import Supplier from "./layout/landing/Supplier";
+import Warehouse from "./components/Warehouse";
 
 const jwtToken = localStorage.jwttoken;
 
@@ -43,6 +49,12 @@ function App() {
             <Switch>
               <SecuredRoute exact path="/menu" component={Dashboard}/>
               <SecuredRoute exact path="/add-product" component={CreateUpdateProduct}/>
+              <SecuredRoute exact path="/add-warehouse" component={Warehouse}/>
+              <SecuredRoute exact path="/supplier" component={Supplier}/>
+              <SecuredRoute exact path="/add-supplier" component={CreateUpdateSupplier}/>
+              <SecuredRoute exact path="/product/:id" component={ProductDetail}/>
+              <SecuredRoute exact path="/supplier/:id" component={SupplierDetail}/>
+              <SecuredRoute path="*" component={NotFoundPage}/>
             </Switch>
           </div>
         </Router>

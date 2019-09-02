@@ -26,10 +26,30 @@
       }
     }
 
+    @media screen and (max-width: 576px){
+      .right-box{
+        margin-top: 16px;
+      }
+    }
+
     .right-box{
       & > div {
         margin-bottom: 16px;
       }
+
+      .form-control{
+        &.search{
+          border-radius: 32px;
+          height: calc(1.5em + .75rem + 10px);
+        }
+      }
     }
+  }
+}
+
+ul{
+  li{
+    display: inherit;
+    list-style-type: none;
   }
 }
