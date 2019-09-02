@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_WAREHOUSE, GET_WAREHOUSES, GET_STOCK} from "./types";
+import {GET_WAREHOUSE, GET_WAREHOUSES, GET_STOCK, GET_ERRORS} from "./types";
 
 export const addStock = (Stock, product_id) => async dispatch => {
   try{
@@ -15,7 +15,10 @@ export const addWarehouse = Warehouse => async dispatch => {
     await axios.post("api/stock/add-warehouse", Warehouse);
     window.location.reload();
   }catch (e) {
-    console.log('err')
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
   }
 };
 
@@ -33,7 +36,10 @@ export const updateStockQuantity = (Stock, update_type) => async dispatch => {
     await axios.patch(`/api/stock/update-quantity?update_type=${update_type}`, Stock);
     window.location.reload()
   }catch (e) {
-    console.log('err')
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
   }
 }
 

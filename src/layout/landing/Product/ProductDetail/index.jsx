@@ -41,6 +41,7 @@ class ProductDetail extends PureComponent {
       categories: [],
       warehouses: [],
       warehouse: {},
+      errors: {},
       selectedWarehouse: {}
     }
   }
@@ -58,7 +59,7 @@ class ProductDetail extends PureComponent {
   UNSAFE_componentWillReceiveProps(nextProps){
     console.log('nex', nextProps);
 
-    const { stock: selectedStock, product } = nextProps;
+    const { stock: selectedStock, product, errors } = nextProps;
 
     const{
       id,
@@ -77,6 +78,7 @@ class ProductDetail extends PureComponent {
     } = nextProps.product;
 
     this.setState({
+      errors,
       product,
       selectedStock,
       id,
@@ -117,7 +119,7 @@ class ProductDetail extends PureComponent {
 
     const updatedStock = {
       id: this.state.selectedStock.id,
-      product: { id: this.state.id},
+      product: { id: this.state.id },
       warehouse: this.state.selectedStock.warehouse,
       quantity: this.state.selectedStock.quantity,
       quantityChange: this.state.quantityChange,
@@ -125,7 +127,6 @@ class ProductDetail extends PureComponent {
 
     this.props.updateStockQuantity(updatedStock, this.state.selectedUpdateType);
 
-    console.log('updated', updatedStock);
   };
 
   onChangeUpdateType = updateType => {
@@ -134,7 +135,6 @@ class ProductDetail extends PureComponent {
       selectedUpdateType: value
     });
 
-    console.log('value', value);
   };
 
   handleOpenWarehouseModal = () => {
@@ -320,16 +320,16 @@ class ProductDetail extends PureComponent {
                       </div>
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="stockOnHand">Stok Barang: </label>
-                    <input type="text"
-                           id="stockOnHand"
-                           name="stockOnHand"
-                           className="form-control"
-                           value={this.state.stockOnHand}
-                           onChange={this.handleChangeForm}
-                           disabled={this.state.isReadOnlyMode}/>
-                  </div>
+                  {/*<div className="form-group">*/}
+                  {/*  <label htmlFor="stockOnHand">Stok Barang: </label>*/}
+                  {/*  <input type="text"*/}
+                  {/*         id="stockOnHand"*/}
+                  {/*         name="stockOnHand"*/}
+                  {/*         className="form-control"*/}
+                  {/*         value={this.state.stockOnHand}*/}
+                  {/*         onChange={this.handleChangeForm}*/}
+                  {/*         disabled={this.state.isReadOnlyMode}/>*/}
+                  {/*</div>*/}
                   <div className="form-row">
                     <div className="form-group col-md-8">
                       <label htmlFor="supplier">Supplier: </label>
@@ -381,11 +381,11 @@ class ProductDetail extends PureComponent {
                 <div className="detail-action">
                   <Button onClick={this.handleUpdateMode} disabled={!this.state.isReadOnlyMode}>Mode Edit</Button>
                   <Button disabled={this.state.isReadOnlyMode} onClick={this.handleSubmitUpdate}>Simpan Perubahan</Button>
-                  <Button color="danger" onClick={this.handleDeleteProduct}>Hapus Barang</Button>
+                  <Button color="danger" onClick={this.handleDeleteProduct}>Hapus</Button>
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 second">
               <h5>Inventori Barang</h5>
               <div className="row mb-2">
                 <Button
@@ -447,9 +447,12 @@ class ProductDetail extends PureComponent {
                   <p className="mb-2">Total Barang</p>
                   <input type="number" id="quantity" className="form-control" value={selectedStock.quantity} disabled/>
                 </div>
+                <div className="form-group">
+                  <label htmlFor="action">Masuk / Keluar</label>
+                  <Select options={updateTypeOptions} placeholder="Masuk / Keluar" onChange={this.onChangeUpdateType}/>
+                </div>
                 <label>Jumlah: </label>
-                <div className="form-group row">
-                  <div className="col">
+                <div className="form-group">
                     <input type="number"
                            className="form-control"
                            placeholder="Jumlah"
@@ -457,10 +460,7 @@ class ProductDetail extends PureComponent {
                            onChange={this.handleChangeForm}
                            value={this.state.quantityChange}
                     />
-                  </div>
-                  <div className="col">
-                    <Select options={updateTypeOptions} placeholder="Pilih Aksi" onChange={this.onChangeUpdateType}/>
-                  </div>
+                  {this.state.errors && <div className="text-danger"><small>{this.state.errors.invalidQuantityResponse}</small></div>}
                 </div>
               </form>
               <Button onClick={this.handleUpdateQuantity}>Simpan</Button>
@@ -479,7 +479,8 @@ const mapStateToProps = state => ({
   product: state.product.product,
   categories: state.category.categories,
   warehouses: state.stock.warehouses,
-  stock: state.stock.stock
+  stock: state.stock.stock,
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, {

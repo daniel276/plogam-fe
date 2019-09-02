@@ -7,6 +7,10 @@ class Login extends PureComponent {
 
   constructor(){
     super();
+
+    this.state = {
+      errors: {}
+    }
   }
 
   onChange = e => {
@@ -46,7 +50,7 @@ class Login extends PureComponent {
 
   render() {
 
-    // const { username, password } = this.state;
+    const { errors = {} } = this.state;
 
     return(
         <div className="login-box">
@@ -54,9 +58,11 @@ class Login extends PureComponent {
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <input type="text" className="form-control form-control-lg" placeholder="Username" name="username" onChange={this.onChange}/>
+              {errors.username && <div className="text-danger"><small>{errors.username}</small></div>}
             </div>
             <div className="form-group">
               <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" onChange={this.onChange}/>
+              {errors.password && <div className="text-danger"><small>{errors.password}</small></div>}
             </div>
             <input type="submit" className="btn btn-primary btn-block mt-4"/>
           </form>

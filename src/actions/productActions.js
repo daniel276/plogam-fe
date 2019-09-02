@@ -24,9 +24,12 @@ export const getProduct = (product_id) => async dispatch => {
       payload: res.data
     })
   }catch (e) {
-    console.log('err')
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
   }
-}
+};
 
 export const createProduct = (newProduct, history) => async dispatch => {
   try{
@@ -35,7 +38,10 @@ export const createProduct = (newProduct, history) => async dispatch => {
     window.location.reload();
 
   }catch (e) {
-    console.log('error');
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
   }
 };
 
@@ -44,7 +50,10 @@ export const updateProduct = (Product) => async dispatch => {
     await axios.patch("/api/product", Product);
     window.location.reload();
   }catch (e) {
-    console.log('err')
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
   }
 };
 

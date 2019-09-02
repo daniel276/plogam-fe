@@ -59,15 +59,6 @@ class Product extends PureComponent {
 
             <div className="column">
               <p className="item-title">
-                Stok Produk
-              </p>
-              <p className="item-value">
-                {hit.stockOnHand}
-              </p>
-            </div>
-
-            <div className="column">
-              <p className="item-title">
                 Harga Jual
               </p>
               <p className="item-value">

@@ -26,6 +26,12 @@
       }
     }
 
+    @media screen and (max-width: 576px){
+      .right-box{
+        margin-top: 16px;
+      }
+    }
+
     .right-box{
       & > div {
         margin-bottom: 16px;

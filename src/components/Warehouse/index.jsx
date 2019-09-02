@@ -11,6 +11,7 @@ class Warehouse extends PureComponent {
     super(props);
 
     this.state = {
+      errors: {},
       isOpenEditModal: false,
       isReadOnlyMode: true,
       id: 0,
@@ -29,11 +30,15 @@ class Warehouse extends PureComponent {
   UNSAFE_componentWillReceiveProps(nextProps){
     console.log('next', nextProps);
 
-    const { id: selectedId, name: selectedName } = nextProps.warehouse;
+    const { errors } = nextProps;
+
+    const { id: selectedId, name: selectedName, address: selectedAddress } = nextProps.warehouse;
 
     this.setState({
+      errors,
       id: selectedId,
-      selectedName
+      selectedName,
+      selectedAddress
     })
   }
 
@@ -72,7 +77,8 @@ class Warehouse extends PureComponent {
 
     const UpdatedWarehouse = {
       id: this.state.selectedId,
-      name: this.state.selectedName
+      name: this.state.selectedName,
+      address: this.state.selectedAddress
     };
 
     this.props.updateWarehouse(UpdatedWarehouse)
@@ -110,6 +116,7 @@ class Warehouse extends PureComponent {
                          value={this.state.name}
                          onChange={this.onChangeForm}
                   />
+                  {this.state.errors && <div className="text-danger"><small>{this.state.errors.name}</small></div>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="warehouseAddress">Alamat: </label>
@@ -148,6 +155,7 @@ class Warehouse extends PureComponent {
                          value={this.state.selectedName}
                          disabled={this.state.isReadOnlyMode}
                   />
+                  {this.state.errors && <div className="text-danger"><small>{this.state.errors.name}</small></div>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="warehouseAddress">Alamat:</label>
@@ -155,7 +163,8 @@ class Warehouse extends PureComponent {
                             id="warehouseAddress"
                             className="form-control"
                             value={this.state.selectedAddress}
-                            onChange={this.onChangeForm}>Alamat:</textarea>
+                            onChange={this.onChangeForm}
+                            disabled={this.state.isReadOnlyMode}/>
                 </div>
                 <Button onClick={this.handleReadOnlyMode} disabled={!this.state.isReadOnlyMode}>Ubah</Button>
                 <Button className="ml-3" color="success" onClick={this.handleUpdate}>Simpan</Button>
@@ -169,7 +178,8 @@ class Warehouse extends PureComponent {
 
 const mapStateToProps = state => ({
   warehouses: state.stock.warehouses,
-  warehouse: state.stock.warehouse
+  warehouse: state.stock.warehouse,
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, { getWarehouses, getWarehouse, addWarehouse, updateWarehouse })(Warehouse);

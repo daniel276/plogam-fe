@@ -49,6 +49,7 @@ class Dashboard extends PureComponent{
             </div>
             <div className="col-sm-8">
               <div className="right-box">
+                <h3>Cari Barang...</h3>
                   <CustomSearchBox/>
                   {/*<ProductItemHits {...hits}/>*/}
                   <Hits hitComponent={Product} />
