@@ -1,16 +1,23 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Table, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Button, Table } from "reactstrap";
 import {
+  addBankAccount,
+  addContactPerson,
   getSupplier,
   getSupplierContact,
+  getBankAccount,
   updateSupplier,
   updateSupplierContact,
-  deleteSupplier
+  updateBankAccount,
+  deleteSupplier,
+  deleteBankAccount
 } from "../../../../actions/supplierActions";
 import { getProductsBySupplierId } from "../../../../actions/productActions";
 import ContactPerson from "../../../../components/Supplier/ContactPerson";
+import AddBankAccountModal from "../../../../components/Supplier/BankAccount/AddBankAccountModal";
+import EditBankAccountModal from "../../../../components/Supplier/BankAccount/EditBankAccountModal";
 
 import "./styles.scss";
 
@@ -21,7 +28,10 @@ class SupplierDetail extends PureComponent{
 
     this.state = {
       isReadOnlyMode: true,
+      isOpenEditContactModal: false,
       isOpenAddContactModal: false,
+      isOpenAddBankAccountModal: false,
+      isOpenEditBankAccountModal: false,
       id: 0,
       objectID: "",
       supplierName: "",
@@ -31,15 +41,25 @@ class SupplierDetail extends PureComponent{
       supplier: {},
       products: [],
       contact: {},
+      bankAccount: {},
       productCode: "",
       productName: "",
       name: "",
       phone: "",
       emailOrPhone: "",
-      selectedContactId: 0
+      selectedContactId: 0,
+      selectedBankAccountId: 0
     }
-
   }
+
+  getContactInitialState = () => {
+    this.setState({
+      id: 0,
+      name: "",
+      phone: "",
+      emailOrPhone: ""
+    })
+  };
 
   handleUpdateMode = () => {
     this.setState(prevState => ({
@@ -47,15 +67,41 @@ class SupplierDetail extends PureComponent{
     }))
   };
 
-  handleAddContact = id => e => {
+  handleOpenEditContactModal = id => e => {
     const { id: supplier_id } = this.props.match.params;
 
     this.setState(prevState => ({
-      isOpenAddContactModal: !prevState.isOpenAddContactModal,
+      isOpenEditContactModal: !prevState.isOpenEditContactModal,
       selectedContactId: id
     }));
 
     this.props.getSupplierContact(supplier_id, id);
+
+  };
+
+  handleOpenAddContactModal = e => {
+    this.setState(prevState => ({
+      isOpenAddContactModal: !prevState.isOpenAddContactModal,
+      id: 0,
+      name: "",
+      phone: "",
+      emailOrPhone: ""
+    }))
+  };
+
+  handleOpenAddBankAccountModal = e => {
+    this.setState(prevState => ({
+      isOpenAddBankAccountModal: !prevState.isOpenAddBankAccountModal
+    }))
+  };
+
+  handleOpenEditBankAccountModal = id => e => {
+
+    this.setState(prevState => ({
+      isOpenEditBankAccountModal: !prevState.isOpenEditBankAccountModal,
+    }));
+
+      this.props.getBankAccount(id);
   };
 
   handleInputChange = e => {
@@ -71,8 +117,14 @@ class SupplierDetail extends PureComponent{
     this.props.getProductsBySupplierId(id);
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     const { id, objectID, supplierName, city, address, note } = nextProps.supplier.supplier;
+
+    if(nextProps.errors){
+      this.setState({
+        errors: nextProps.errors
+      })
+    }
 
     this.setState({
       id,
@@ -129,23 +181,38 @@ class SupplierDetail extends PureComponent{
           <td>{value.name}</td>
           <td>{value.phoneNumber}</td>
           <td>{value.emailOrPhone ? value.emailOrPhone : '-'}</td>
-          <td><Button onClick={this.handleAddContact(value.id)}>Ubah</Button></td>
+          <td>{this.props.security.user.role === "ADMIN" ? (<Button onClick={this.handleOpenEditContactModal(value.id)}>Ubah</Button>) : "-"}</td>
+        </tr>
+    ))
+  }
+
+  renderBankAccountTable(){
+    const { bankAccounts = [] } = this.props.supplier.supplier;
+
+    return bankAccounts.map(value => (
+        <tr key={value.id}>
+          <td>{value.accountName}</td>
+          <td>{value.accountNumber}</td>
+          <td>{value.bankName}</td>
+          <td>{this.props.security.user.role === "ADMIN" ? <Button size="sm" onClick={this.handleOpenEditBankAccountModal(value.id)}>Detail</Button> : "-"}</td>
         </tr>
     ))
   }
 
   render() {
+    const isAdmin = this.props.security.user.role === "ADMIN";
+
     return (
         <div className="container supplier-detail">
             <div className="row header">
-              <h3 className="display-4">Supplier</h3>
+              <h3 className="display-4">{this.state.supplierName}</h3>
             </div>
           <div className="row">
             <div className="col-md-6 left">
               <div className="detail-form">
                 <form action="">
                   <div className="form-group">
-                    <label htmlFor="supplierName" className="col-form-label-sm">Nama Supplier: </label>
+                    <label htmlFor="supplierName" className="col-form-label">Nama Supplier: </label>
                       <input type="text"
                              id="supplierName"
                              name="supplierName"
@@ -155,7 +222,7 @@ class SupplierDetail extends PureComponent{
                              disabled={this.state.isReadOnlyMode}/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="supplierCity" className="col-form-label-sm">Kota</label>
+                    <label htmlFor="supplierCity" className="col-form-label">Kota</label>
                     <input type="text"
                            id="supplierCity"
                            name="city"
@@ -165,7 +232,7 @@ class SupplierDetail extends PureComponent{
                            readOnly={this.state.isReadOnlyMode}/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="supplierAddress" className="col-form-label-sm">Alamat: </label>
+                    <label htmlFor="supplierAddress" className="col-form-label">Alamat: </label>
                     <textarea id="supplierAddress"
                               className="form-control"
                               name="address"
@@ -174,7 +241,7 @@ class SupplierDetail extends PureComponent{
                               readOnly={this.state.isReadOnlyMode}/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="note" className="col-form-label-sm">Catatan:</label>
+                    <label htmlFor="note" className="col-form-label">Catatan:</label>
                     <textarea id="note"
                               className="form-control"
                               name="note"
@@ -182,11 +249,12 @@ class SupplierDetail extends PureComponent{
                               onChange={this.handleInputChange}
                               readOnly={this.state.isReadOnlyMode}/>
                   </div>
+                  {isAdmin &&
                   <div className="form-group">
-                    <Button onClick={this.handleUpdateMode} disabled={!this.state.isReadOnlyMode}>Mode Edit</Button>
-                    <Button onClick={this.handleSubmitUpdate} disabled={this.state.isReadOnlyMode}>Simpan Perubahan</Button>
-                    <Button color="danger" onClick={this.handleDeleteSupplier}>Hapus Supplier</Button>
-                  </div>
+                    <Button onClick={this.handleUpdateMode}>Mode Edit</Button>
+                    <Button color="success" onClick={this.handleSubmitUpdate} disabled={this.state.isReadOnlyMode}>Simpan Perubahan</Button>
+                    {/*<Button color="danger" onClick={this.handleDeleteSupplier}>Hapus</Button>*/}
+                  </div>}
                 </form>
               </div>
             </div>
@@ -212,8 +280,8 @@ class SupplierDetail extends PureComponent{
           </div>
           <div className="row">
             <div className="col-md-6">
-              <div className="contact-table">
-                <h3 className="mb-2">Kontak Supplier <Button className="ml-2" size="sm" onClick={this.handleAddContact()}>Tambah</Button></h3>
+              <div className="contact-table" style={{overflowY: 'scroll'}}>
+                <h3 className="mb-2">Kontak Supplier <Button className="ml-2" size="sm" onClick={this.handleOpenAddContactModal}>Tambah</Button></h3>
                 <Table hover>
                   <thead>
                   <tr>
@@ -230,32 +298,78 @@ class SupplierDetail extends PureComponent{
               </div>
             </div>
             <div className="col-md-6">
-
+              <div className="bank-account-detail">
+                <h3 className="mb-2">Informasi Rekening Bank
+                  {isAdmin &&
+                  <Button className="ml-2"
+                          color="success"
+                          size="sm"
+                          onClick={this.handleOpenAddBankAccountModal}>Tambah
+                  </Button>}
+                </h3>
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Nama Rekening</th>
+                      <th>No. Rekening</th>
+                      <th>Nama Bank</th>
+                      <th>#</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.renderBankAccountTable()}
+                  </tbody>
+                </Table>
+              </div>
             </div>
           </div>
           <ContactPerson
               {...this.props}
+              addContact
+              selectedId={this.state.selectedContactId}
               isOpenAddContactModal={this.state.isOpenAddContactModal}
-              getSupplierContact={this.props.getSupplierContact}
-              handleOpenAddContactModal={this.handleAddContact}
+              handleOpenAddContactModal={this.handleOpenAddContactModal}
+          />
+          <ContactPerson
+              {...this.props}
+              editContact
+              isOpenEditContactModal={this.state.isOpenEditContactModal}
+              handleOpenEditContactModal={this.handleOpenEditContactModal}
+          />
+          <AddBankAccountModal
+              {...this.props}
+              isOpenAddBankAccountModal={this.state.isOpenAddBankAccountModal}
+              handleOpenAddBankAccountModal={this.handleOpenAddBankAccountModal}
+          />
+          <EditBankAccountModal
+              {...this.props}
+              isOpenEditBankAccountModalOpen={this.state.isOpenEditBankAccountModal}
+              handleOpenEditBankAccountModal={this.handleOpenEditBankAccountModal}
           />
         </div>
     );
   }
-
 }
 
 const mapStateToProps = state => ({
+  security: state.security,
   supplier: state.supplier,
   products: state.product.products,
-  contact: state.supplier.contact
+  contact: state.supplier.contact,
+  bankAccount: state.supplier.bankAccount,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, {
+  addBankAccount,
+  addContactPerson,
   getSupplier,
   getSupplierContact,
+  getBankAccount,
   getProductsBySupplierId,
   updateSupplier,
   updateSupplierContact,
-  deleteSupplier
+  updateBankAccount,
+  deleteSupplier,
+  deleteBankAccount
 })(SupplierDetail);

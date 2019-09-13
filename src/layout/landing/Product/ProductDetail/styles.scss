@@ -12,5 +12,13 @@
         margin-left: 8px;
       }
     }
+
+    @media screen and (max-width: 400px) {
+      .detail-action{
+        button:last-child{
+          margin-top: 8px;
+        }
+      }
+    }
   }
 }

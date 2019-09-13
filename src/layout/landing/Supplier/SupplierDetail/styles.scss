@@ -10,7 +10,7 @@
       margin-top: 16px;
 
       .product-table{
-        //height: 480px;
+        max-height: 480px;
         overflow-y: scroll;
 
         table{

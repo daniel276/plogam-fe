@@ -32,24 +32,22 @@ class Header extends PureComponent {
 
     const { user, validToken } = security;
 
-    console.log('header', this.props);
-
     const isUserAuthenticated = validToken;
 
     return(
         <Navbar color="light" light expand="md">
           <NavbarBrand>
-            Inventory App
+            Panca Logam
           </NavbarBrand>
           <NavbarToggler onClick={this.handleToggle} />
           <Collapse isOpen={this.state.isOpenToggle} navbar>
            {isUserAuthenticated &&
            <Nav navbar>
               <NavItem>
-                <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                <Link className="nav-link" to="/">Menu <span className="sr-only">(current)</span></Link>
               </NavItem>
              <NavItem>
-               <Link className="nav-link" to="/">Produk <span className="sr-only">(current)</span></Link>
+               <Link className="nav-link" to="/product">Produk <span className="sr-only">(current)</span></Link>
              </NavItem>
               <NavItem>
                 <Link className="nav-link" to="/supplier">Supplier <span className="sr-only">(current)</span></Link>
@@ -67,7 +65,7 @@ class Header extends PureComponent {
              <React.Fragment>
                <Nav className="ml-auto mr-3" navbar>
                  <NavItem>
-                   <Link className="nav-link">
+                   <Link className="nav-link" to="">
                      Hi, {user.fullName}
                    </Link>
                  </NavItem>

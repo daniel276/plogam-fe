@@ -1,14 +1,11 @@
 import React, { PureComponent } from "react";
-import Product from "../../components/Product/Product";
-import Button from "reactstrap/es/Button";
+import ProductList from "../../components/Product/ProductList";
 import algoliasearch from "algoliasearch";
-import {InstantSearch, SearchBox, Hits, connectHits, connectSearchBox, Pagination} from "react-instantsearch-dom";
-import CreateUpdateProduct from "../../components/Product/CreateUpdateProduct";
-import HitsPerPage from "react-instantsearch-dom/dist/es/components/HitsPerPage";
+import {InstantSearch, Hits,connectSearchBox, Pagination} from "react-instantsearch-dom";
 
 const searchClient = algoliasearch('783TRW2722', '403b14b247221aa3b00343ec4d32a42a');
 
-class Dashboard extends PureComponent{
+class Product extends PureComponent{
 
   add = () => {
     this.props.history.push("/add-product")
@@ -31,7 +28,6 @@ class Dashboard extends PureComponent{
 
         </form>
     );
-
     const CustomSearchBox = connectSearchBox(SearchBox);
 
     return (
@@ -39,29 +35,24 @@ class Dashboard extends PureComponent{
           <div className="jumbotron">
             <h1 className="display-4">Menu utama</h1>
           </div>
-          <InstantSearch searchClient={searchClient} indexName="dev_plogam">
+
           <div className="row product-content">
-            <div className="col-sm-4">
-              <div className="left-box">
-                <Button block size="lg" onClick={this.add}>Tambah Barang</Button>
-                <Button className="mt-3" size="lg" block onClick={this.addWarehouse}>Tambah Lokasi</Button>
-              </div>
-            </div>
-            <div className="col-sm-8">
+            <div className="col-sm-12">
               <div className="right-box">
                 <h3>Cari Barang...</h3>
+                <InstantSearch searchClient={searchClient} indexName="dev_plogam">
                   <CustomSearchBox/>
-                  {/*<ProductItemHits {...hits}/>*/}
-                  <Hits hitComponent={Product} />
-                  {/*<Pagination padding="12" defaultRefinement={2} />*/}
+                  <Hits hitComponent={ProductList} />
+                  {/*<Highlight attribute="productName" hit={Hit} />*/}
+                  <Pagination defaultRefinement={1} />
+                </InstantSearch>
               </div>
             </div>
           </div>
-          </InstantSearch>
         </div>
     );
   }
 
 }
 
-export default Dashboard;
+export default Product;

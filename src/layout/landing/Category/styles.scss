@@ -1,5 +1,5 @@
-.warehouse{
-  .add-warehouse{
+.category{
+  .add-category{
     .add-form{
       padding: 12px;
       border: 1px solid #ddd;
@@ -7,13 +7,13 @@
     }
   }
 
-  .warehouse-list{
+  .category-list{
     max-height: 560px;
     overflow-y: scroll
   }
 
   @media screen and (max-width: 576px){
-    .warehouse-list{
+    .category-list{
       margin-top: 32px;
     }
   }

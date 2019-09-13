@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
-import Button from "reactstrap/es/Button";
 import {Hits, InstantSearch, Pagination} from "react-instantsearch-dom";
-import Product from "../../../components/Product/Product";
 import algoliasearch from "algoliasearch";
 import { connectSearchBox } from "react-instantsearch-dom";
 import SupplierList from "../../../components/Supplier/SupplierList";
@@ -42,17 +40,13 @@ class Supplier extends PureComponent{
           </div>
           <InstantSearch searchClient={searchClient} indexName="dev_supplier">
             <div className="row product-content">
-              <div className="col-sm-4">
-                <div className="left-box">
-                  <Button className="add-button" onClick={this.add}>Tambah Supplier</Button>
-                </div>
-              </div>
-              <div className="col-sm-8">
+              <div className="col-sm-12">
                 <div className="supplier-item">
+                  <h3>Cari Supplier...</h3>
                   <CustomSearchBox/>
                   {/*<ProductItemHits {...hits}/>*/}
                   <Hits {...this.props} hitComponent={SupplierList} />
-                  <Pagination/>
+                  <Pagination defaultRefinement={1}/>
                 </div>
               </div>
             </div>

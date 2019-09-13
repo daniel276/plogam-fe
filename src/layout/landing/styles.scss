@@ -39,10 +39,31 @@
 
       .form-control{
         &.search{
+          font-size: 1.20rem;
           border-radius: 32px;
           height: calc(1.5em + .75rem + 10px);
+          padding-left: 24px;
         }
       }
+
+      .ais-Pagination{
+        display:flex;
+
+        .ais-Pagination-list{
+          display: inline-flex;
+          margin-left: auto;
+          margin-right: auto;
+          padding-inline-start: 0;
+          .ais-Pagination-item{
+            font-size: 23px;
+
+            &:not(:last-child) {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+
     }
   }
 }

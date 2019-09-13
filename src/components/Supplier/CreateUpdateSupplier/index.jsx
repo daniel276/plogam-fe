@@ -14,7 +14,18 @@ class CreateUpdateSupplier extends PureComponent {
       supplierName: "",
       city: "",
       address: "",
-      note: ""
+      note: "",
+      errors: {}
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    const { errors } = nextProps;
+
+    if(nextProps.errors){
+      this.setState({
+        errors
+      })
     }
   }
 
@@ -34,7 +45,6 @@ class CreateUpdateSupplier extends PureComponent {
       note: this.state.note
     };
 
-    console.log('this', submitData);
     this.props.addSupplier(submitData, this.props.history);
   };
 
@@ -47,10 +57,12 @@ class CreateUpdateSupplier extends PureComponent {
                 <div className="form-group">
                   <label htmlFor="supplierName">Nama Supplier</label>
                   <input type="text" className="form-control" id="supplierName" placeholder="PT TRI ASIH..." name="supplierName" onChange={this.handleChange}/>
+                  {this.state.errors.supplierName && <div className="text-danger"><small>{this.state.errors.supplierName}</small></div>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="city">Kota</label>
                   <input type="text" className="form-control" id="city" name="city" placeholder="Palembang..." onChange={this.handleChange}/>
+                  {this.state.errors.city && <div className="text-danger"><small>{this.state.errors.city}</small></div>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="address">Alamat</label>
@@ -61,7 +73,7 @@ class CreateUpdateSupplier extends PureComponent {
                   <textarea name="note" id="note" className="form-control" placeholder="catatan..." onChange={this.handleChange}/>
                 </div>
                 <div className="save-button">
-                  <Button onClick={this.onSubmit} >Simpan</Button>
+                  <Button onClick={this.onSubmit}>Simpan</Button>
                 </div>
               </form>
             </div>
@@ -71,4 +83,8 @@ class CreateUpdateSupplier extends PureComponent {
   }
 }
 
-export default connect(null, { addSupplier })(CreateUpdateSupplier);
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { addSupplier })(CreateUpdateSupplier);

@@ -1,15 +1,16 @@
 import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./styles.scss";
 import { Button } from "reactstrap";
 
 class SupplierList extends PureComponent {
 
+  handleClickSupplier = id => e => {
+    this.props.history.push(`/supplier/${id}`)
+  };
+
   render() {
-
-    console.log('inside supplier list', this.props);
-
     const { hit } = this.props;
 
     return (
@@ -19,10 +20,8 @@ class SupplierList extends PureComponent {
               <p className="font-weight-bold">{hit.supplierName} - {hit.city}</p>
             </div>
             <div className="right-side">
-              <Button>
-                <Link className="text-decoration-none" style={{color: '#ffff'}} to={`supplier/${hit.id}`}>
-                  Lihat Detail
-                </Link>
+              <Button onClick={this.handleClickSupplier(hit.id)}>
+                Lihat Detail
               </Button>
             </div>
           </div>
@@ -31,4 +30,4 @@ class SupplierList extends PureComponent {
   }
 }
 
-export default SupplierList;
+export default withRouter(SupplierList);

@@ -28,8 +28,6 @@ class Warehouse extends PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-    console.log('next', nextProps);
-
     const { errors } = nextProps;
 
     const { id: selectedId, name: selectedName, address: selectedAddress } = nextProps.warehouse;
@@ -95,52 +93,52 @@ class Warehouse extends PureComponent {
   };
 
   render() {
-
-    console.log('ware', this.props);
-
     return (
         <div className="container warehouse">
           <div className="jumbotron">
             <h3 className="display-4">Tambah Lokasi</h3>
           </div>
-          <div className="col-md-6 m-auto">
-            <div className="add-warehouse-form">
-              <h3>Tambah Lokasi Gudang</h3>
-              <form action="">
-                <div className="form-group">
-                  <label htmlFor="warehouseName" className="col-form-label">Nama Lokasi: </label>
-                  <input type="text"
-                         className="form-control"
-                         placeholder="Tj. Beringin"
-                         name="name"
-                         value={this.state.name}
-                         onChange={this.onChangeForm}
-                  />
-                  {this.state.errors && <div className="text-danger"><small>{this.state.errors.name}</small></div>}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="warehouseAddress">Alamat: </label>
-                  <textarea name="address" id="warehouseAddress" className="form-control" value={this.state.address} onChange={this.onChangeForm}>Alamat:</textarea>
-                </div>
-                <Button color="success" onClick={this.handleSubmit}>Simpan</Button>
-              </form>
+          <div className="row">
+            <div className="add-warehouse col-md-6">
+              <h3 className="mb-3">Tambah Lokasi Gudang</h3>
+              <div className="add-form">
+                <form action="">
+                  <div className="form-group">
+                    <label htmlFor="warehouseName" className="col-form-label">Nama Lokasi: </label>
+                    <input type="text"
+                           className="form-control"
+                           placeholder="Tj. Beringin"
+                           name="name"
+                           value={this.state.name}
+                           onChange={this.onChangeForm}
+                    />
+                    {this.state.errors && <div className="text-danger"><small>{this.state.errors.name}</small></div>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="warehouseAddress">Alamat: </label>
+                    <textarea name="address" id="warehouseAddress" className="form-control" value={this.state.address} onChange={this.onChangeForm}>Alamat:</textarea>
+                  </div>
+                  <Button color="success" onClick={this.handleSubmit}>Simpan</Button>
+                </form>
+              </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <h3 className="ml-auto mr-auto mb-3">Daftar Lokasi</h3>
-          </div>
-            <Table  className="w-50 mr-auto ml-auto">
-              <thead>
+            <div className="warehouse-list col-md-6">
+              <h3 className="ml-auto mr-auto mb-3">Daftar Lokasi</h3>
+              <Table>
+                <thead>
                 <tr>
                   <th>ID</th>
                   <th>Nama Lokasi</th>
                   <th>#</th>
                 </tr>
-              </thead>
-              <tbody>
-              {this.renderWarehousesTable()}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                {this.renderWarehousesTable()}
+                </tbody>
+              </Table>
+            </div>
+          </div>
+
           <Modal isOpen={this.state.isOpenEditModal} toggle={this.handleOpenEditModal()}>
             <ModalHeader>Ubah Lokasi</ModalHeader>
             <ModalBody>
