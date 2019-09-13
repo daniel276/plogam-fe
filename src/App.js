@@ -3,21 +3,25 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import Landing from "./layout/landing";
-import Dashboard from "./layout/landing/Dashboard";
+import Product from "./layout/landing/Product";
 import store from "./store";
 import Header from "./layout/Header";
+import Menu from "./layout/landing/Menu";
 import CreateUpdateProduct from "./components/Product/CreateUpdateProduct";
 import CreateUpdateSupplier from "./components/Supplier/CreateUpdateSupplier";
 import ProductDetail from "./layout/landing/Product/ProductDetail";
 import SupplierDetail from "./layout/landing/Supplier/SupplierDetail";
+import Category from "./layout/landing/Category";
 import './App.css';
 import NotFoundPage from "./layout/landing/NotFoundPage";
 //styles
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import setJWTToken from "./securityUtils/setJWTToken";
 import {SET_CURRENT_USER} from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecureRoute";
+import SecureRouteAdmin from "./securityUtils/SecureRouteAdmin";
 import Supplier from "./layout/landing/Supplier";
 import Warehouse from "./components/Warehouse";
 
@@ -47,8 +51,10 @@ function App() {
             <Header/>
             <Route exact path="/" component={Landing}/>
             <Switch>
-              <SecuredRoute exact path="/menu" component={Dashboard}/>
+              <SecureRouteAdmin exact path="/menu" component={Menu} />
+              <SecuredRoute exact path="/product" component={Product}/>
               <SecuredRoute exact path="/add-product" component={CreateUpdateProduct}/>
+              <SecuredRoute exact path="/add-category" component={Category}/>
               <SecuredRoute exact path="/add-warehouse" component={Warehouse}/>
               <SecuredRoute exact path="/supplier" component={Supplier}/>
               <SecuredRoute exact path="/add-supplier" component={CreateUpdateSupplier}/>

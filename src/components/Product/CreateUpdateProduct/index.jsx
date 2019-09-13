@@ -9,11 +9,6 @@ import { createCategory , getCategories } from "../../../actions/categoryActions
 import { getSuppliers } from "../../../actions/supplierActions";
 import { createProduct } from "../../../actions/productActions";
 
-const createOption = (name) => ({
-  name,
-  value: name.toLowerCase().replace(/\W/g, ''),
-});
-
 class CreateUpdateProduct extends PureComponent{
 
   constructor(props) {
@@ -46,15 +41,9 @@ class CreateUpdateProduct extends PureComponent{
   componentDidMount() {
     this.props.getSuppliers();
     this.props.getCategories();
-    // this.setState({
-    //   categories: this.props.categories
-    // })
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-    console.log('next', nextProps);
-    console.log('next state', this.state);
-
     const { errors } = nextProps;
 
     if(nextProps.errors){
@@ -66,8 +55,6 @@ class CreateUpdateProduct extends PureComponent{
 
   onSubmit = (e) => {
     e.preventDefault();
-
-    const { selectedCategory: categoryThis} = this.state.selectedCategory;
 
     const newData = {
       productCode: this.state.productCode,
@@ -84,23 +71,18 @@ class CreateUpdateProduct extends PureComponent{
     };
 
     this.props.createProduct(newData, this.props.history);
-
-    console.log('new data', newData);
-
   };
 
   handleChangeSelectedCategory = selected => {
     this.setState({
       selectedCategory: selected
     });
-    console.log(`Option selected:`, selected);
   };
 
   handleChangeSelectedSupplier = selected => {
     this.setState({
       selectedSupplier: selected
     });
-    console.log('selected Supplier', selected)
   };
 
   handleChangeForm = e => {
@@ -134,14 +116,10 @@ class CreateUpdateProduct extends PureComponent{
       console.log('err')
     }
 
-    console.log('add', newCategoryName);
-  }
+  };
 
 
   render() {
-    // this.props.getCategories();
-
-    const { categories } = this.props;
 
     let categoryOptions = this.props.categories.map(function (category) {
         return { id: category.id, name: category.name}
@@ -154,12 +132,25 @@ class CreateUpdateProduct extends PureComponent{
     return (
         <div className="add-product">
           <div className="col-md-6 offset-md-3">
+            <h3 className="display-4 text-center">Tambah Barang</h3>
             <div className="add-form">
               <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label htmlFor="productCode">Kode Barang</label>
-                <input type="text" className="form-control" id="productCode" placeholder="HLO401" name="productCode" onChange={this.handleChangeForm}/>
+                <input type="text" className="form-control" id="productCode" placeholder="HLO401" name="productCode" onChange={this.handleChangeForm} value={this.state.productCode || ''}/>
                 {this.state.errors.productCode && <div className="text-danger"><small>{this.state.errors.productCode}</small></div>}
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="productName">Nama Produk</label>
+                <input type="text"
+                       className="form-control"
+                       id="productName"
+                       placeholder="Baterai Alkaline"
+                       name="productName"
+                       onChange={this.handleChangeForm}
+                       value={this.state.productName || ''}/>
+                {this.state.errors.productName && <div className="text-danger"><small>{this.state.errors.productName}</small></div>}
               </div>
 
               <div className="form-row inner-box">
@@ -173,18 +164,6 @@ class CreateUpdateProduct extends PureComponent{
                 <div className="form-group col-md-4 right">
                   <Button onClick={this.handleToggleSupplier}>Tambah Supplier</Button>
                 </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="productName">Nama Produk</label>
-                <input type="text"
-                       className="form-control"
-                       id="productName"
-                       placeholder="Baterai Alkaline"
-                       name="productName"
-                       onChange={this.handleChangeForm}
-                       value={this.state.productName}/>
-                 {this.state.errors.productName && <div className="text-danger"><small>{this.state.errors.productName}</small></div>}
               </div>
 
               <div className="form-row inner-box">
@@ -209,7 +188,7 @@ class CreateUpdateProduct extends PureComponent{
                              className="form-control"
                              id="categoryName"
                              name="newCategoryName"
-                             value={this.state.newCategoryName}
+                             value={this.state.newCategoryName || ''}
                              onChange={this.handleChangeForm}
                       />
                       {this.state.errors && (<div className="text-danger"><small>{this.state.errors.categoryName}</small></div>)}
@@ -228,13 +207,13 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="text"
+                    <input type="number"
                            className="form-control"
                            id="costPrice"
-                           placeholder={100000}
+                           placeholder={100.000}
                            name="costPrice"
                            onChange={this.handleChangeForm}
-                           value={this.state.costPrice}/>
+                           value={this.state.costPrice || ''}/>
                   </div>
                   </div>
                 <div className="form-group col-md-4">
@@ -243,13 +222,13 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="text"
+                    <input type="number"
                            className="form-control"
                            id="bulkPrice"
-                           placeholder={1100000}
+                           placeholder="110.000"
                            name="bulkPrice"
                            onChange={this.handleChangeForm}
-                           value={this.state.bulkPrice}/>
+                           value={this.state.bulkPrice || ''}/>
                   </div>
                 </div>
                 <div className="form-group col-md-4">
@@ -258,13 +237,13 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="text"
+                    <input type="number"
                            className="form-control"
                            id="sellPrice"
-                           placeholder="Rp.120.000"
+                           placeholder="120.000"
                            name="retailPrice"
                            onChange={this.handleChangeForm}
-                           value={this.state.retailPrice}/>
+                           value={this.state.retailPrice || ''}/>
                   </div>
                 </div>
               </div>
@@ -299,7 +278,7 @@ class CreateUpdateProduct extends PureComponent{
                           placeholder="Warna Hitam..."
                           name="note"
                           onChange={this.handleChangeForm}
-                          value={this.state.note}/>
+                          value={this.state.note || ''}/>
               </div>
 
               <div className="form-row">

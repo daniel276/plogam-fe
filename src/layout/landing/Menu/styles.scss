@@ -1,0 +1,21 @@
+.menu{
+  .header-text{
+    margin-bottom: 32px;
+  }
+
+  .button-row{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    &:not(:last-child){
+      margin-bottom: 32px;
+    }
+    .button-group{
+      button:not(:last-child){
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+}

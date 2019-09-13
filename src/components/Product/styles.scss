@@ -1,4 +1,4 @@
-@media only screen and (max-device-width: 768px){
+@media only screen and (max-device-width: 767px){
   .product-list .grid .column{
     &:not(:first-child){
       margin-left: 0.1rem !important;
@@ -18,7 +18,7 @@
 .product-list{
   padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 16px;
 
   .grid{
     display: flex;
@@ -28,6 +28,8 @@
     }
 
     .column{
+      font-size: 1rem;
+
       &:not(:first-child){
         margin-left: 32px;
       }
