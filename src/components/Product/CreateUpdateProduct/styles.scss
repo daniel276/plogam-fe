@@ -1,0 +1,45 @@
+.add-product{
+  margin-top: 32px;
+
+  .text-header{
+    text-align: center;
+  }
+
+  .add-form{
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    form .form-row {
+      &.inner-box{
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .right{
+      align-self: flex-end;
+
+      button{
+        width: 100%;
+      }
+
+      .add-title{
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .add-button{
+      margin-top: 16px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  p{
+    margin: 0;
+  }
+}

@@ -1,0 +1,36 @@
+.supplier-detail{
+  .header{
+    h3{
+      margin: 0 auto 0 auto;
+    }
+  }
+
+  .row {
+    & > div{
+      margin-top: 16px;
+
+      .product-table{
+        max-height: 480px;
+        overflow-y: scroll;
+
+        table{
+          table-layout: fixed;
+        }
+
+        tbody tr td button{
+          color: inherit;
+          a{
+            color: #ffff;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    form{
+      button{
+        margin-left: 8px;
+      }
+    }
+  }
+}
