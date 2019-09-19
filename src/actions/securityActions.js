@@ -11,17 +11,20 @@ export const login = loginRequest => async dispatch => {
     const res = await axios.post("/users/login", loginRequest);
     //extract token from res.data
     const { token } = res.data;
-    //set the token in our localStorage
-    localStorage.setItem("jwttoken", token);
-    //set our token in the header
-    setJWTToken(token);
-    //decode the token
-    const decoded = jwt_decode(token);
-    //dispatch to securityReducer
-    dispatch({
-      type: SET_CURRENT_USER,
-      payload: decoded
-    })
+
+    if( token ){
+      //set the token in our localStorage
+      localStorage.setItem("jwttoken", token);
+      //set our token in the header
+      setJWTToken(token);
+      //decode the token
+      const decoded = jwt_decode(token);
+      //dispatch to securityReducer
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: decoded
+      })
+    }
   }catch (err) {
     dispatch({
       type: GET_ERRORS,
