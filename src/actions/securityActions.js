@@ -12,6 +12,8 @@ export const login = loginRequest => async dispatch => {
     //extract token from res.data
     const { token } = res.data;
 
+    console.log('res', res);
+
     if( token ){
       //set the token in our localStorage
       localStorage.setItem("jwttoken", token);
