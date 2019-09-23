@@ -33,7 +33,6 @@
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync build/ s3://plogam-fe --acl public-read"
   },
-  "proxy": "http://api.mypancalogam.com:8080/plogam",
   "eslintConfig": {
     "extends": "react-app"
   },
