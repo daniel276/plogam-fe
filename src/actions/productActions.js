@@ -3,7 +3,7 @@ import {GET_PRODUCTS, GET_PRODUCT, GET_ERRORS, GET_PRODUCTS_BY_SUPPLIER, DELETE_
 
 export const getProducts = () => async dispatch => {
   try{
-    const res = await axios.get("/product/all");
+    const res = await axios.get("/plogam/product/all");
     dispatch({
       type: GET_PRODUCTS,
       payload: res.data
@@ -18,7 +18,7 @@ export const getProducts = () => async dispatch => {
 
 export const getProduct = (product_id) => async dispatch => {
   try{
-    const res = await axios.get(`/product/${product_id}`);
+    const res = await axios.get(`/plogam/product/${product_id}`);
     dispatch({
       type: GET_PRODUCT,
       payload: res.data
@@ -33,7 +33,7 @@ export const getProduct = (product_id) => async dispatch => {
 
 export const createProduct = (newProduct, history) => async dispatch => {
   try{
-    await axios.post("/product/add-product", newProduct);
+    await axios.post("/plogam/product/add-product", newProduct);
     history.push("/product");
     window.location.reload();
 
@@ -47,7 +47,7 @@ export const createProduct = (newProduct, history) => async dispatch => {
 
 export const updateProduct = (Product) => async dispatch => {
   try{
-    await axios.patch("/product", Product);
+    await axios.patch("/plogam/product", Product);
     window.location.reload();
   }catch (e) {
     dispatch({
@@ -59,7 +59,7 @@ export const updateProduct = (Product) => async dispatch => {
 
 export const deleteProduct = (product_id) => async dispatch => {
   if(window.confirm("Apakah anda yakin menghapus barang ini?")){
-    await axios.delete(`/product/${product_id}`);
+    await axios.delete(`/plogam/product/${product_id}`);
     dispatch({
       type: DELETE_PRODUCT,
       payload: product_id
@@ -69,7 +69,7 @@ export const deleteProduct = (product_id) => async dispatch => {
 
 export const getProductsBySupplierId = (supplierId) => async dispatch => {
   try{
-    const res = await axios.get(`/product/supplier_id=${supplierId}`);
+    const res = await axios.get(`/plogam/product/supplier_id=${supplierId}`);
     dispatch({
       type: GET_PRODUCTS_BY_SUPPLIER,
       payload: res.data

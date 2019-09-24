@@ -4,7 +4,7 @@ import {GET_CATEGORIES, GET_CATEGORY, GET_ERRORS} from "./types";
 export const createCategory = (newCategory) => async dispatch => {
   try{
     if(window.confirm("Menambahkan kategori akan menghapus data di halaman ini, lanjutkan ?")){
-      await axios.post("/category", newCategory);
+      await axios.post("/plogam/category", newCategory);
       window.location.reload();
     }
   }catch (e) {
@@ -16,7 +16,7 @@ export const createCategory = (newCategory) => async dispatch => {
 };
 
 export const getCategory = (id) => async dispatch => {
-  const res = await axios.get(`/category/${id}`);
+  const res = await axios.get(`/plogam/category/${id}`);
   dispatch({
     type: GET_CATEGORY,
     payload: res.data
@@ -24,7 +24,7 @@ export const getCategory = (id) => async dispatch => {
 };
 
 export const getCategories = () => async dispatch => {
-    const res = await axios.get("/category/all");
+    const res = await axios.get("/plogam/category/all");
     dispatch({
       type: GET_CATEGORIES,
       payload: res.data

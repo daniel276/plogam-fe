@@ -23,7 +23,7 @@ export const addSupplier = (supplierData, history) => async dispatch => {
 
 export const addContactPerson = (ContactPerson, supplier_id) => async dispatch => {
   try{
-    await axios.post(`/supplier/add-contact/${supplier_id}`, ContactPerson);
+    await axios.post(`/plogam/supplier/add-contact/${supplier_id}`, ContactPerson);
     window.location.reload();
   }catch (e) {
     dispatch({
@@ -35,7 +35,7 @@ export const addContactPerson = (ContactPerson, supplier_id) => async dispatch =
 
 export const addBankAccount = (BankAccount, supplier_id) => async dispatch => {
   try {
-    await axios.post(`/bank-account/${supplier_id}`, BankAccount);
+    await axios.post(`/plogam/bank-account/${supplier_id}`, BankAccount);
     window.location.reload()
   }catch (e) {
     dispatch({
@@ -47,7 +47,7 @@ export const addBankAccount = (BankAccount, supplier_id) => async dispatch => {
 
 export const updateSupplier = (Supplier) => async dispatch => {
   try {
-    await axios.patch("/supplier", Supplier);
+    await axios.patch("/plogam/supplier", Supplier);
     window.location.reload();
   }catch (e) {
     dispatch({
@@ -59,7 +59,7 @@ export const updateSupplier = (Supplier) => async dispatch => {
 
 export const updateBankAccount = (BankAccount) => async dispatch => {
   try {
-    await axios.patch(`/bank-account`, BankAccount);
+    await axios.patch(`/plogam/bank-account`, BankAccount);
     window.location.reload();
   }catch (e) {
     dispatch({
@@ -70,7 +70,7 @@ export const updateBankAccount = (BankAccount) => async dispatch => {
 };
 
 export const getSuppliers = () => async dispatch => {
-  const res = await axios.get("/supplier/all");
+  const res = await axios.get("/plogam/supplier/all");
   dispatch({
     type: GET_SUPPLIERS,
     payload: res.data
@@ -78,7 +78,7 @@ export const getSuppliers = () => async dispatch => {
 };
 
 export const getSupplierContacts = (supplier_id) => async dispatch => {
-  const res = await axios.get(`/supplier/contacts/${supplier_id}`);
+  const res = await axios.get(`/plogam/supplier/contacts/${supplier_id}`);
   dispatch({
     type: GET_SUPPLIER_CONTACTS,
     payload: res.data
@@ -86,7 +86,7 @@ export const getSupplierContacts = (supplier_id) => async dispatch => {
 };
 
 export const getBankAccounts = (supplier_id) => async dispatch => {
-  const res = await axios.get(`/bank-account?supplier_id=${supplier_id}`);
+  const res = await axios.get(`/plogam/bank-account?supplier_id=${supplier_id}`);
   dispatch({
     type: GET_SUPPLIER_BANK_ACCOUNTS,
     payload: res.data
@@ -94,7 +94,7 @@ export const getBankAccounts = (supplier_id) => async dispatch => {
 };
 
 export const getBankAccount = (account_id) => async dispatch => {
-  const res = await axios.get(`/bank-account/${account_id}`);
+  const res = await axios.get(`/plogam/bank-account/${account_id}`);
   dispatch({
     type: GET_SUPPLIER_BANK_ACCOUNT,
     payload: res.data
@@ -102,7 +102,7 @@ export const getBankAccount = (account_id) => async dispatch => {
 };
 
 export const getSupplierContact = (supplier_id, contact_id) => async dispatch => {
-  const res = await axios.get(`/supplier/${supplier_id}/contact/${contact_id}`);
+  const res = await axios.get(`/plogam/supplier/${supplier_id}/contact/${contact_id}`);
   dispatch({
     type: GET_SUPPLIER_CONTACT,
     payload: res.data
@@ -111,7 +111,7 @@ export const getSupplierContact = (supplier_id, contact_id) => async dispatch =>
 
 export const updateSupplierContact = (ContactPerson, supplier_id) => async dispatch => {
   try{
-    await axios.patch(`/supplier/update-contact/${supplier_id}`, ContactPerson);
+    await axios.patch(`/plogam/supplier/update-contact/${supplier_id}`, ContactPerson);
     window.location.reload();
   }catch (e) {
     console.log('error', e);
@@ -120,7 +120,7 @@ export const updateSupplierContact = (ContactPerson, supplier_id) => async dispa
 
 export const deleteSupplier = (supplier_id) => async dispatch => {
   if(window.confirm("Apakah anda yakin ingin menghapus supplier ini?")){
-    await axios.delete(`/supplier/${supplier_id}`);
+    await axios.delete(`/plogam/supplier/${supplier_id}`);
     dispatch({
       type: DELETE_SUPPLIER,
       payload: supplier_id
@@ -130,13 +130,13 @@ export const deleteSupplier = (supplier_id) => async dispatch => {
 
 export const deleteBankAccount = (account_id) => async dispatch => {
   if(window.confirm("Apakah anda yakin untuk menghapus?")){
-    await axios.delete(`/bank-account/${account_id}`)
+    await axios.delete(`/plogam/bank-account/${account_id}`)
     window.location.reload();
   }
 }
 
 export const getSupplier = (id) => async dispatch => {
-  const res = await axios.get(`/supplier/${id}`);
+  const res = await axios.get(`/plogam/supplier/${id}`);
   dispatch({
     type: GET_SUPPLIER,
     payload: res.data
