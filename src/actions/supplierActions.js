@@ -10,7 +10,7 @@ import {
 
 export const addSupplier = (supplierData, history) => async dispatch => {
   try{
-    await axios.post("/supplier/add-supplier", supplierData);
+    await axios.post("/plogam/supplier/add-supplier", supplierData);
     history.push("/supplier");
     window.location.reload();
   }catch (e) {
