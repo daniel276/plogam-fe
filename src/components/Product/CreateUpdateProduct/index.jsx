@@ -4,10 +4,10 @@ import "./styles.scss";
 import {Button} from "reactstrap";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
-import { Collapse } from "reactstrap";
 import { createCategory , getCategories } from "../../../actions/categoryActions";
 import { getSuppliers } from "../../../actions/supplierActions";
 import { createProduct } from "../../../actions/productActions";
+import NumberFormat from "react-number-format";
 
 class CreateUpdateProduct extends PureComponent{
 
@@ -98,9 +98,10 @@ class CreateUpdateProduct extends PureComponent{
   };
 
   handleCategoryToggle = () => {
-    this.setState(prevState => ({
-      isOpenCategoryToggle: !prevState.isOpenCategoryToggle
-    }))
+    // this.setState(prevState => ({
+    //   isOpenCategoryToggle: !prevState.isOpenCategoryToggle
+    // }))
+    this.props.history.push("/kategori")
   };
 
   handleAddCategory = () => {
@@ -179,25 +180,25 @@ class CreateUpdateProduct extends PureComponent{
                     Tambah kategori
                   </Button>
                 </div>
-                <Collapse isOpen={this.state.isOpenCategoryToggle}>
-                  <div className="form-row">
-                    <div className="form-group col-md-8">
-                      <label htmlFor="categoryName">Nama kategori baru</label>
-                      <input type="text"
-                             placeholder="Keramik"
-                             className="form-control"
-                             id="categoryName"
-                             name="newCategoryName"
-                             value={this.state.newCategoryName || ''}
-                             onChange={this.handleChangeForm}
-                      />
-                      {this.state.errors && (<div className="text-danger"><small>{this.state.errors.categoryName}</small></div>)}
-                    </div>
-                    <div className="form-group col-md-4 right">
-                      <Button onClick={this.handleAddCategory}>Simpan</Button>
-                    </div>
-                  </div>
-                </Collapse>
+                {/*<Collapse isOpen={this.state.isOpenCategoryToggle}>*/}
+                {/*  <div className="form-row">*/}
+                {/*    <div className="form-group col-md-8">*/}
+                {/*      <label htmlFor="categoryName">Nama kategori baru</label>*/}
+                {/*      <input type="text"*/}
+                {/*             placeholder="Keramik"*/}
+                {/*             className="form-control"*/}
+                {/*             id="categoryName"*/}
+                {/*             name="newCategoryName"*/}
+                {/*             value={this.state.newCategoryName || ''}*/}
+                {/*             onChange={this.handleChangeForm}*/}
+                {/*      />*/}
+                {/*      {this.state.errors && (<div className="text-danger"><small>{this.state.errors.categoryName}</small></div>)}*/}
+                {/*    </div>*/}
+                {/*    <div className="form-group col-md-4 right">*/}
+                {/*      <Button onClick={this.handleAddCategory}>Simpan</Button>*/}
+                {/*    </div>*/}
+                {/*  </div>*/}
+                {/*</Collapse>*/}
               </div>
 
               <div className="form-row">
@@ -207,13 +208,17 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="number"
-                           className="form-control"
-                           id="costPrice"
-                           placeholder={100.000}
-                           name="costPrice"
-                           onChange={this.handleChangeForm}
-                           value={this.state.costPrice || ''}/>
+                    <NumberFormat
+                        name="costPrice"
+                        id="costPrice"
+                        thousandSeparator={true}
+                        value={this.state.costPrice}
+                        className="form-control"
+                        readOnly={this.state.isReadOnlyMode}
+                        onValueChange={(values) => {
+                          const { value } = values
+                          this.setState({costPrice: value})
+                        }} />
                   </div>
                   </div>
                 <div className="form-group col-md-4">
@@ -222,13 +227,17 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="number"
-                           className="form-control"
-                           id="bulkPrice"
-                           placeholder="110.000"
-                           name="bulkPrice"
-                           onChange={this.handleChangeForm}
-                           value={this.state.bulkPrice || ''}/>
+                    <NumberFormat
+                        name="bulkPrice"
+                        id="bulkPrice"
+                        thousandSeparator={true}
+                        value={this.state.bulkPrice}
+                        className="form-control"
+                        readOnly={this.state.isReadOnlyMode}
+                        onValueChange={(values) => {
+                          const { value } = values
+                          this.setState({bulkPrice: value})
+                        }} />
                   </div>
                 </div>
                 <div className="form-group col-md-4">
@@ -237,13 +246,17 @@ class CreateUpdateProduct extends PureComponent{
                     <div className="input-group-prepend">
                       <span className="input-group-text">Rp.</span>
                     </div>
-                    <input type="number"
-                           className="form-control"
-                           id="sellPrice"
-                           placeholder="120.000"
-                           name="retailPrice"
-                           onChange={this.handleChangeForm}
-                           value={this.state.retailPrice || ''}/>
+                    <NumberFormat
+                        name="retailPrice"
+                        id="retailPrice"
+                        thousandSeparator={true}
+                        value={this.state.retailPrice}
+                        className="form-control"
+                        readOnly={this.state.isReadOnlyMode}
+                        onValueChange={(values) => {
+                          const { value } = values;
+                          this.setState({retailPrice: value})
+                        }} />
                   </div>
                 </div>
               </div>

@@ -3,9 +3,21 @@ import {GET_CATEGORIES, GET_CATEGORY, GET_ERRORS} from "./types";
 
 export const createCategory = (newCategory) => async dispatch => {
   try{
-    if(window.confirm("Menambahkan kategori akan menghapus data di halaman ini, lanjutkan ?")){
       await axios.post("/plogam/category", newCategory);
       window.location.reload();
+  }catch (e) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: e.response.data
+    })
+  }
+};
+
+export const updateCategory = (updatedCategory) => async dispatch => {
+  try {
+    if(window.confirm("Yakin untuk mengubah kategori ini?")){
+      await axios.patch(`/plogam/category`, updatedCategory);
+      window.location.reload()
     }
   }catch (e) {
     dispatch({

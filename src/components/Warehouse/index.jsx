@@ -150,7 +150,7 @@ class Warehouse extends PureComponent {
                          placeholder="Tj. Beringin"
                          name="selectedName"
                          onChange={this.onChangeForm}
-                         value={this.state.selectedName}
+                         value={this.state.selectedName || ''}
                          disabled={this.state.isReadOnlyMode}
                   />
                   {this.state.errors && <div className="text-danger"><small>{this.state.errors.name}</small></div>}
@@ -160,7 +160,7 @@ class Warehouse extends PureComponent {
                   <textarea name="selectedAddress"
                             id="warehouseAddress"
                             className="form-control"
-                            value={this.state.selectedAddress}
+                            value={this.state.selectedAddress || ''}
                             onChange={this.onChangeForm}
                             disabled={this.state.isReadOnlyMode}/>
                 </div>

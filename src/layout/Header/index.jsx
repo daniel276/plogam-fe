@@ -52,6 +52,9 @@ class Header extends PureComponent {
               <NavItem>
                 <Link className="nav-link" to="/supplier">Supplier <span className="sr-only">(current)</span></Link>
               </NavItem>
+             <NavItem>
+               <Link className="nav-link" to="/simulasi-harga">Simulasi Harga<span className="sr-only">(current)</span></Link>
+             </NavItem>
             </Nav>}
             {!isUserAuthenticated &&
             <Nav className="ml-auto mr-3" navbar>
