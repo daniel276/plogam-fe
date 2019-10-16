@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-// import format from "";
+import NumberFormat from "react-number-format";
 import "moment/locale/id";
 import { getProduct, updateProduct, deleteProduct } from "../../../../actions/productActions";
 import { getCategories } from "../../../../actions/categoryActions";
@@ -308,13 +308,17 @@ class ProductDetail extends PureComponent {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Rp.</span>
                         </div>
-                      <input type="number"
-                             id="costPrice"
-                             name="costPrice"
-                             className="form-control"
-                             value={this.state.costPrice || 0}
-                             onChange={this.handleChangeForm}
-                             readOnly={this.state.isReadOnlyMode}/>
+                      <NumberFormat
+                          name="costPrice"
+                          id="costPrice"
+                          thousandSeparator={true}
+                          value={this.state.costPrice || 0}
+                          className="form-control"
+                          readOnly={this.state.isReadOnlyMode}
+                          onValueChange={(values) => {
+                            const { value } = values;
+                            this.setState({costPrice: value})
+                          }} />
                       </div>
                     </div>}
                     <div className="form-group col-md">
@@ -323,13 +327,17 @@ class ProductDetail extends PureComponent {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Rp.</span>
                         </div>
-                      <input type="number"
-                             id="bulkPrice"
-                             name="bulkPrice"
-                             className="form-control"
-                             value={this.state.bulkPrice || 0}
-                             onChange={this.handleChangeForm}
-                             readOnly={this.state.isReadOnlyMode}/>
+                        <NumberFormat
+                            name="bulkPrice"
+                            id="bulkPrice"
+                            thousandSeparator={true}
+                            value={this.state.bulkPrice || 0}
+                            className="form-control"
+                            readOnly={this.state.isReadOnlyMode}
+                            onValueChange={(values) => {
+                              const { value } = values;
+                              this.setState({bulkPrice: value})
+                            }} />
                       </div>
                     </div>
                     <div className="form-group col-md">
@@ -338,13 +346,17 @@ class ProductDetail extends PureComponent {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Rp.</span>
                         </div>
-                      <input type="text"
-                             id="retailPrice"
-                             name="retailPrice"
-                             className="form-control"
-                             value={this.state.retailPrice || 0}
-                             onChange={this.handleChangeForm}
-                             readOnly={this.state.isReadOnlyMode}/>
+                        <NumberFormat
+                            name="retailPrice"
+                            id="retailPrice"
+                            thousandSeparator={true}
+                            value={this.state.retailPrice || 0}
+                            className="form-control"
+                            readOnly={this.state.isReadOnlyMode}
+                            onValueChange={(values) => {
+                              const { value } = values;
+                              this.setState({retailPrice: value})
+                            }} />
                       </div>
                     </div>
                   </div>
@@ -403,7 +415,7 @@ class ProductDetail extends PureComponent {
                   </div>
                 </form>
                {isAdmin && <div className="detail-action">
-                  <Button onClick={this.handleUpdateMode} disabled={!this.state.isReadOnlyMode}>Mode Edit</Button>
+                  <Button onClick={this.handleUpdateMode} disabled={!this.state.isReadOnlyMode}>Ubah</Button>
                   <Button color="success" disabled={this.state.isReadOnlyMode} onClick={this.handleSubmitUpdate}>Simpan Perubahan</Button>
                   <Button color="danger" onClick={this.handleDeleteProduct}>Hapus</Button>
                 </div>}

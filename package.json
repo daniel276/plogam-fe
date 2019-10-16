@@ -18,6 +18,9 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-instantsearch-dom": "^5.7.0",
+    "react-loader-spinner": "^3.1.4",
+    "react-number-format": "^4.3.0",
+    "react-promise-tracker": "^2.0.5",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
@@ -33,6 +36,7 @@
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync build/ s3://plogam-fe --acl public-read"
   },
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },

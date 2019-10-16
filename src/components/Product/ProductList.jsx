@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import classnames from "classnames";
 import { Collapse, Button } from "reactstrap";
 import {withRouter} from "react-router-dom";
+import numberjs from "number-format.js";
 import moment from "moment";
 import "moment/locale/id";
 
@@ -70,7 +71,7 @@ class ProductList extends PureComponent {
                 Harga Grosir
               </p>
               <p className="item-value">
-                {hit.bulkPrice}
+                {numberjs("#,##0.####", hit.bulkPrice)}
               </p>
             </div>
 
@@ -79,7 +80,7 @@ class ProductList extends PureComponent {
                 Harga Jual
               </p>
               <p className="item-value">
-                {hit.retailPrice}
+                {numberjs("#,##0.####", hit.retailPrice)}
               </p>
             </div>
 

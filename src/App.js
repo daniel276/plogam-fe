@@ -24,6 +24,7 @@ import SecuredRoute from "./securityUtils/SecureRoute";
 import SecureRouteAdmin from "./securityUtils/SecureRouteAdmin";
 import Supplier from "./layout/landing/Supplier";
 import Warehouse from "./components/Warehouse";
+import PriceSimulation from "./layout/landing/PriceSimulation";
 
 const jwtToken = localStorage.jwttoken;
 
@@ -54,12 +55,13 @@ function App() {
               <SecureRouteAdmin exact path="/menu" component={Menu} />
               <SecuredRoute exact path="/product" component={Product}/>
               <SecuredRoute exact path="/add-product" component={CreateUpdateProduct}/>
-              <SecuredRoute exact path="/add-category" component={Category}/>
+              <SecuredRoute exact path="/kategori" component={Category}/>
               <SecuredRoute exact path="/add-warehouse" component={Warehouse}/>
               <SecuredRoute exact path="/supplier" component={Supplier}/>
               <SecuredRoute exact path="/add-supplier" component={CreateUpdateSupplier}/>
               <SecuredRoute exact path="/product/:id" component={ProductDetail}/>
               <SecuredRoute exact path="/supplier/:id" component={SupplierDetail}/>
+              <SecuredRoute exact path="/simulasi-harga" component={PriceSimulation}/>
               <SecuredRoute path="*" component={NotFoundPage}/>
             </Switch>
           </div>

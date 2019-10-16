@@ -25,6 +25,10 @@ class Menu extends PureComponent {
     this.props.history.push("/supplier")
   };
 
+  handleCategories = e => {
+    this.props.history.push("/kategori")
+  };
+
   render() {
     return (
         <div className="menu container">
@@ -42,6 +46,7 @@ class Menu extends PureComponent {
               <div className="button-group">
                 <Button outline color="success" block size="lg" onClick={this.handleAddProduct}>Tambah Barang</Button>
                 <Button outline color="success" block size="lg" onClick={this.handleAddSupplier}>Tambah Supplier</Button>
+                <Button outline color="success" block size="lg" onClick={this.handleCategories}>Tambah Kategori Barang</Button>
                 <Button outline color="success" block size="lg" onClick={this.handleAddWarehouse}>Tambah Gudang/Lokasi</Button>
               </div>
             </div>
