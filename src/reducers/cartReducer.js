@@ -53,7 +53,7 @@ export default function(state = initialState, action){
     case SUB_QUANTITY:
       let addedItems2 = state.cartItems.find(item => item.id === action.payload);
       if(addedItems2.quantity === 1){
-        let newItems = state.cartItems.filter(item => item.id === action.payload);
+        let newItems = state.cartItems.filter(item => item.id !== action.payload);
         return {
           ...state,
           cartItems: newItems

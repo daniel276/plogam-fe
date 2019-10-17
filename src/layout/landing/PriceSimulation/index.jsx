@@ -114,9 +114,9 @@ class PriceSimulation extends Component {
           <td>{!this.state.isBulkPrice ? numberjs("Rp.#,##0.####", value.retailPrice) : numberjs("Rp.#,##0.####", value.retailPrice)}</td>
           <td>
             <div className="d-flex justify-content-sm-between">
-              <span onClick={this.handleAddQuantity(value.id)}><i className="fa fa-chevron-up" style={{fontSize: '16px'}}/></span>
+              <Button size="sm" onClick={this.handleAddQuantity(value.id)}>+</Button>
               <span>{value.quantity}</span>
-              <span onClick={this.handleSubQuantity(value.id)}><i className="fa fa-chevron-down" style={{fontSize: '16px'}}/></span>
+              <Button size="sm" onClick={this.handleSubQuantity(value.id)}>-</Button>
             </div>
           </td>
           <td>{this.getSubTotal(!this.state.isBulkPrice ? value.retailPrice : value.bulkPrice, value.quantity)}</td>
